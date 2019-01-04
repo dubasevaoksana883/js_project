@@ -21,7 +21,6 @@ class RegistrationForm extends HTMLElement{
                 tagName: "div",
                 attrs: {
                     innerText: "Вход",
-//                     className: "",
                     onclick: event => {
                            this.startEnter()
                     }
@@ -31,7 +30,6 @@ class RegistrationForm extends HTMLElement{
                 tagName: "div",
                 attrs: {
                     innerText: "Регистрация",
-//                     className: "",
                     onclick: event => {
                             this.startReg()
                     }
@@ -41,7 +39,6 @@ class RegistrationForm extends HTMLElement{
         var createTags = (arr) => {
             arr.forEach (
                 function (currentValue){
-                     if(!currentValue) return
                      var elem = addTag (currentValue.tagName, mainCont)
                      for (var attr in currentValue.attrs){
                          elem[attr] = currentValue.attrs[attr]
@@ -77,21 +74,18 @@ class RegistrationForm extends HTMLElement{
                 tagName: "h3",
                 attrs: {
                     innerText: "Введите имя"
-                    // className: ""
                 }
             },
             {
                 tagName: "input",
                 attrs: {
                     id: "lg"
-                    //className: ""
                 }
             },
             {
                 tagName: "h3",
                 attrs: {
                     innerText: "Адрес электроной почты",
-                    //className: ""
                 }
             },
             {
@@ -99,7 +93,6 @@ class RegistrationForm extends HTMLElement{
                 attrs: {
                     type: "email",
                     id: "em"
-                    //className: ""
                 }
             },
             {
@@ -114,22 +107,18 @@ class RegistrationForm extends HTMLElement{
                 attrs: {
                     type: "password",
                     id: "ps"
-                    //className: ""
                 }
             },
             {
                 tagName: "div",
                 attrs: {
                     innerText: "Продолжить",
-                    //className:
                     onclick: event => {
-                            console.log("start")
                             var inp = Array.from(mainCont.children)
                             .filter (
                                 elem => elem.tagName === "INPUT"
                             )
                             var prop = inp.every( x => x.value )
-                            console.log(prop)
                             if (prop){
                                     console.log ("if")
                                     var obj = {}
@@ -165,7 +154,7 @@ class RegistrationForm extends HTMLElement{
                 nElem.attrs.onclick = elem.attrs.onclick
             }
             if (ind < 3 || ind > 4) return nElem
-        })
+        }).filter(el => el)
         var massageStyle = "style='position:absolute; bottom:5px; color: red;'"
         var addBtn = () => {
           checkId("btn")
