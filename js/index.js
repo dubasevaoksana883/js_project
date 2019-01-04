@@ -10,20 +10,50 @@ class Game {
     var parts = [
       {
         name: "castle",
-        background: "images/castle.png"
-      }
+        background: "images/castle.png",
+      },
+      {
+        name: "room",
+        background: "images/room.png",
+      },
+      {
+        name: "knight",
+        background: "images/knight.png",
+      },
+      {
+        name: "safe",
+        background: "images/safe.png",
+      },
+      {
+        name: "room",
+        background: "images/room.png",
+      },
+      {
+        name: "room-chest",
+        background: "images/room-chest.png",
+      },
+      {
+        name: "book",
+        background: "images/book.png",
+      },
     ]
     this.scenarioGame = name => {
       var curentPart = parts.filter( elem => elem.name === name)[0]
-      this.mainCont.style.backgroundImage = `url(${curentPart.background})`
+      this.mainCont.style = `
+        background-image: url(${curentPart.background});
+        background-size: cover;
+        background-repeat: no-repeat;
+        `
     }
     this.start = () => {
       var btn = createTags("a", this.mainCont)
       btn.className = "startBtn"
       btn.onclick = function (event){
         event.preventDefault()
-        console.warn( "gamestart")
-      }
+        this.scenarioGame("room")
+        console.log(this)
+        event.target.remove()
+      }.bind (this)
     }
   }
 }
