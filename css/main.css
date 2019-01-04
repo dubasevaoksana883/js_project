@@ -65,5 +65,20 @@ rec-form {
               inset 0 0 125px #2395c2,
               0 0 25px #28b3cf,
               0 0 50px #28b3cf;
-
+}
+/* test */
+#bottle {
+  background-image: url("../images/bottle.png");
+}
+#bucket {
+  background-image: url("../images/bucket.png");
+}
+#elixir {
+  background-image: url("../images/elixir.png");
+}
+#key {
+  background-image: url("../images/key.png");
+}
+#sword {
+  background-image: url("../images/sword.png");
 }
