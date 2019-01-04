@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: -2;
 }
 rec-form {
   position: relative;
@@ -26,6 +27,9 @@ rec-form {
   color: #9d5c4c;
 }
 .startBtn {
+  display: block;
+  text-decoration: none;
+  position: relative;
   width: 240px;
   height: 238px;
   border-radius: 50%;
@@ -34,6 +38,32 @@ rec-form {
   background-position: center;
   cursor: pointer;
 }
-.startBtn:hover {
-  box-shadow: 0 0 15px #e8dfd5, 0 0 25px #f6c6ad;
+.startBtn::before {
+  content: "";
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 69px;
+  left: 70px;
+  border-radius: 50%;
+  z-index: -1;
+  transition: all 0.8s;
+  box-shadow: 0 0 100px black,
+              0 0 125px black,
+              0 0 150px black,
+              0 0 175px black;
+}
+.startBtn:hover.startBtn::before{
+
+  box-shadow: 0 0 125px #f6c6ad,
+              0 0 150px #f6c6ad,
+              0 0 175px #f6c6ad;
+}
+.startBtn:active {
+  background-size: 90% 90%;
+  box-shadow: inset 0 0 100px #2395c2,
+              inset 0 0 125px #2395c2,
+              0 0 25px #28b3cf,
+              0 0 50px #28b3cf;
+
 }

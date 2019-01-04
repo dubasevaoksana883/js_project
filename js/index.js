@@ -18,17 +18,18 @@ class Game {
       this.mainCont.style.backgroundImage = `url(${curentPart.background})`
     }
     this.start = () => {
-      var btn = createTags("div", this.mainCont)
+      var btn = createTags("a", this.mainCont)
       btn.className = "startBtn"
       btn.onclick = function (event){
+        event.preventDefault()
         console.warn( "gamestart")
       }
     }
   }
 }
 var game = new Game()
-// var test = game.mainCont.appendChild(document.createElement("rec-form"))
+var test = game.mainCont.appendChild(document.createElement("rec-form"))
 game.scenarioGame("castle")
-// test.assignment (game.start)
-// test.start()
-game.start()
+test.assignment (game.start)
+test.start()
+// game.start()
