@@ -12,10 +12,7 @@ body {
 }
 .mainGround {
   position: absolute;
-  background-image: url("../images/castle.png");
-  transition: all 0.8s;
-  /* width: 1400px;
-  height: 720px; */
+  background-image: url("../images/castle.jpg");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -136,7 +133,7 @@ rec-form {
   z-index: 2;
 }
 .text, .question {
-  background-image: url("../images/board.png");
+  background-image: url("../images/board.jpg");
   width: 400px;
   height: 300px;
   background-repeat: no-repeat;
@@ -172,11 +169,17 @@ rec-form {
   justify-content: center;
 }
 .answBtn {
-
+  padding-bottom: 10px;
+  padding-top: 10px;
+  cursor: pointer;
 }
 .answText {
-
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 5px;
 }
 pre {
   width: 350px;
+  margin: 0;
+  padding-left: 5px;
 }

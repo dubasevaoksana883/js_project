@@ -31,7 +31,7 @@ while ( i <span contenteditable="true">???</span> 10 ){
                     tagName: "div",
                     answers:["0", "<", "++"],
                     attrs: {
-                            innerText: "Answer",
+                            innerText: "Ответить",
                             className: "answBtn"
                      }
                  }

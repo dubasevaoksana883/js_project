@@ -21,12 +21,12 @@ class Game {
     var parts = [
       {
         name: "castle",
-        background: "images/castle.png",
+        background: "images/castle.jpg",
         text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
       },
       {
         name: "room",
-        background: "images/room.png",
+        background: "images/room.jpg",
         text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
         items: [
           {
@@ -180,7 +180,7 @@ class Game {
       },
       {
         name: "safe",
-        background: "images/safe.png",
+        background: "images/safe.jpg",
         text: "Ты почти у цели, что бы открыть дверь нужно отгадать загадку!",
         res: function (){
                  if (event.target.onmousedown()){
@@ -195,7 +195,7 @@ class Game {
       },
       {
         name: "room-chest",
-        background: "images/room-chest.png",
+        background: "images/room-chest.jpg",
         text: "Ура ты нашел сундук! У тебя есть ключ, открой его!",
         res2: function (){
                  if (event.target.onmousedown()){
@@ -215,7 +215,7 @@ class Game {
       },
       {
         name: "book",
-        background: "images/book.png",
+        background: "images/book.jpg",
       },
     ]
     // имя текущей части игры
