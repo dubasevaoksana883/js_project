@@ -1,44 +1,59 @@
 "use strict"
 class Game {
   constructor(){
-    var createTags = (tagName, container = document.body) => {
+    var createTags = (tagName, container = document.body, classN = "") => {
       var elem = container.appendChild (document.createElement(tagName))
+      elem.className = classN
       return elem
     }
+    // функция создания тегов
     this.mainCont = createTags ("div")
     this.mainCont.className = "mainGround"
+    this.resize = () => {
+      this.mainCont.style =`
+      width: ${gameSize.w}px;
+      height: ${gameSize.h}px;
+      left: ${gameSize.indent}px;
+      background-size: cover;
+      background-repeat: no-repeat;
+      `
+    }
     var parts = [
       {
         name: "castle",
         background: "images/castle.png",
+        text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
       },
       {
         name: "room",
         background: "images/room.png",
+        text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
         items: [
           {
             id: "bottle",
             cords: {
-              x: 200,
+              x: 220,
               y: 630
             },
             sizes: {
-              h: 90,
-              w: 90
+              h: 70,
+              w: 50
             },
-            className: "first"
+            className: "first",
+            rem: true,
           },
           {
             id: "bucket",
             cords: {
               x: 960,
-              y: 560
+              y: 590
             },
             sizes: {
-              h: 110,
-              w: 100
+              h: 90,
+              w: 80
             },
-            className: "first"
+            className: "first",
+            rem: true,
           },
           {
             id: "elixir",
@@ -52,8 +67,18 @@ class Game {
             },
             className: "first",
             onclick: function (event) {
-              this.moveItem( event.target, "ib2")
-            }.bind (this)
+              this.moveItem( "elixir", "ib2")
+              namePart === "knight" || namePart === "safe" || "room-chest"? changeOnclick(event.target, function (event){
+                var x = document.querySelector(".question")
+                var t = document.querySelector(".text")
+                if (x && !t ){
+                  x.style.display = "flex"
+                  event.target.remove()
+                }
+                console.log(x)
+              }) : null
+            }.bind (this),
+            rem: false,
           },
           {
             id: "key",
@@ -62,13 +87,35 @@ class Game {
               y: 650
             },
             sizes: {
-              h: 50,
-              w: 50
+              h: 60,
+              w: 60
             },
             className: "first",
             onclick: function (event) {
-              this.moveItem( event.target, "ib3")
-            }.bind (this)
+              this.moveItem( "key", "ib3")
+              namePart === "room-chest"? changeOnclick(event.target, function(event){
+                if ( document.querySelector(".text"))return
+                console.log (event)
+                event.target.remove()
+                var evel = createTags("div", this.mainCont, "evel")
+                evel.style.left = 10 + "px"
+                printText("Злой колдун украл книгу! Что бы его уничтожить, допиши заклинание!")
+                var timer = setInterval(function(){
+                  console.log("interval", this)
+                  if (!document.querySelector(".text")){
+                    clearInterval(timer)
+                    var questContiner = createTags("div", this.mainCont, "question")
+                    qu.createAnswer (  qu.content [qu.curentQuestion], questContiner)
+                    var answBtn = document.querySelector(".answBtn")
+                    answBtn.onclick = function(event){
+                      console.log("down", this)
+                      parts.filter(el =>el.name === "room-chest")[0].res2 ()
+                    }
+                  }
+                }.bind(this), 100)
+              }.bind(this)) :null
+            }.bind (this),
+            rem: false,
           },
           {
             id: "sword",
@@ -82,61 +129,145 @@ class Game {
             },
             className: "first",
             onclick: function (event) {
-              this.moveItem( event.target, "ib1")
-            }.bind (this)
+              this.moveItem( "sword", "ib1")
+              namePart === "knight" ? changeOnclick(event.target, function (event){
+                if ( document.querySelector(".text"))return
+                var oldQue = document.querySelector(".question")
+                if (oldQue)return
+                var questContiner = createTags("div", this.mainCont, "question")
+                qu.createAnswer (  qu.content [qu.curentQuestion], questContiner)
+                var btn = document.querySelector(".answBtn")
+                btn.onclick = function (event){
+                  if (event.target.onmousedown()){
+                    questContiner.remove()
+                     evilDie(document.getElementById("evel_knight"), 'url("images/blood_puddle.png")', "safe")
+                     var x = document.getElementById ("sword")
+                     x.remove()
+                  }else {
+                    var elexirValue = document.getElementById("elixir")
+                    elexirValue ? printText("Ты не смог ответить верно, поэтому тебя ранили, что бы залечить раны примени эликсир") : null
+                    questContiner.style.display = "none"
+                    var elexirValue = document.getElementById("elixir")
+                    !elexirValue ? gameOver() : console.log("hello")
+
+                  }
+                }
+              }.bind (this)) : null
+            }.bind (this),
+            rem: false,
           }
         ]
       },
       {
         name: "knight",
-        background: "images/knight.png",
+        background: "images/knight.jpg",
+        text: "Что бы пройти дальше ты должен победить злого рыцаря применив мечь!",
+        items: [
+          {
+            id: "evel_knight",
+            cords: {
+              x: 950,
+              y: 430,
+            },
+            sizes: {
+              h: 220,
+              w: 130,
+            },
+            className: "first",
+            rem: true,
+          }
+        ]
       },
       {
         name: "safe",
         background: "images/safe.png",
-      },
-      {
-        name: "room",
-        background: "images/room.png",
+        text: "Ты почти у цели, что бы открыть дверь нужно отгадать загадку!",
+        res: function (){
+                 if (event.target.onmousedown()){
+                   event.target.parentNode.remove()
+                   this.scenarioGame("room-chest")
+                 }else {
+                   event.target.parentNode.style.display = "none"
+                   var elix = document.getElementById("elixir")
+                   !elix ? gameOver() : printText("Ответ не верный. Примени элексир для повторной попытки!")
+                 }
+          }.bind(this)
       },
       {
         name: "room-chest",
         background: "images/room-chest.png",
+        text: "Ура ты нашел сундук! У тебя есть ключ, открой его!",
+        res2: function (){
+                 if (event.target.onmousedown()){
+                   event.target.parentNode.remove()
+                   evilDie(document.querySelector(".evel"), 'url("images/smoke.gif")', "book")
+                   setTimeout(function(){
+                     var s = createTags("a", document.querySelector(".mainGround"), "fin")
+                     s.innerText = "Прочитать..."
+                     s.href = "https://github.com/garevna/js-course/wiki/introduction"
+                   }.bind(this),3000)
+                 }else {
+                   event.target.parentNode.style.display = "none"
+                   var elix = document.getElementById("elixir")
+                   !elix ? gameOver() : printText("Ответ не верный. Примени элексир для повторной попытки!")
+                 }
+          }.bind(this)
       },
       {
         name: "book",
         background: "images/book.png",
       },
     ]
+    // имя текущей части игры
+    var namePart = ""
+    // запуск сценария по имени
     this.scenarioGame = name => {
       var curentPart = parts.filter( elem => elem.name === name)[0]
-      this.mainCont.style = `
-        background-image: url(${curentPart.background});
-        background-size: cover;
-        background-repeat: no-repeat;
-        width: ${gameSize.w}px;
-        height: ${gameSize.h}px;
-        position: absolute;
-        left: ${gameSize.indent}px;
-        `
+      document.location.hash = curentPart.name
+      namePart = curentPart.name
+      this.mainCont.style.backgroundImage = `url(${curentPart.background})`
       curentPart.items ? this.setItems(curentPart.items) : null
       curentPart.name === "room" ? menuBar() : null
+      curentPart.text ? printText(curentPart.text) : null
+      if (curentPart.res) {
+        var timer = setInterval(function(){
+          console.log("interval", this)
+          if (!document.querySelector(".text")){
+            clearInterval(timer)
+            var questContiner = createTags("div", this.mainCont, "question")
+            qu.createAnswer (  qu.content [qu.curentQuestion], questContiner)
+            var answBtn = document.querySelector(".answBtn")
+            answBtn.onclick = function(event){
+              console.log("down", this)
+              curentPart.res()
+            }
+          }
+        }.bind(this), 100)
+      }
     }
+    // размеры игрового окна
     var gameSize = {
       w: 1400,
       h: 720,
       indent: (window.innerWidth - 1400) / 2
     }
     this.start = () => {
-      var btn = createTags("a", this.mainCont)
-      btn.className = "startBtn"
-      btn.onclick = function (event){
-        event.preventDefault()
-        this.scenarioGame("room")
-        console.log(this)
-        event.target.remove()
-      }.bind (this)
+      this.scenarioGame("castle")
+      var timer = setInterval(function(){
+        if(!document.querySelector(".text")){
+          clearInterval(timer)
+          var btn = createTags("a", this.mainCont)
+          btn.className = "startBtn"
+          btn.onclick = function (event){
+            event.preventDefault()
+            this.scenarioGame("room")
+            console.log(this)
+            event.target.remove()
+          }.bind (this)
+        }
+      }.bind(this),100)
     }
+    // вывод иконок на страницу
     this.setItems = arr => {
       arr.forEach( elem => {
         var icon = createTags("div", this.mainCont)
@@ -150,6 +281,7 @@ class Game {
         icon.style.left =  elem.cords.x - gameSize.indent + "px"
         icon.style.top = elem.cords.y - gameSize.indent+ "px"
         elem.onclick ? icon.onclick = elem.onclick : null
+        icon.rem = elem.rem
       })
     }
     var menuBar = () => {
@@ -162,35 +294,79 @@ class Game {
         per.className = "itemBar"
       }
     }
-    this.moveItem = (item, spaceId) => {
+    this.moveItem = (itemId, spaceId) => {
+      counter++
       var space = document.getElementById(spaceId)
-      console.dir(space)
-      var spaceBar = document.querySelector(".itemBar")
-      var sw = space.offsetWidth
-      var sh = space.offsetHeight
-      item.style.top = spaceBar.offsetTop + space.offsetTop
-      item.style.left = spaceBar.offsetLeft + space.offsetLeft
-      console.log(item.style.left, item.style.top)
-      item.style.width = sw
-      item.style.height = sh
-      item.style.backgroundSize = `${sw} ${sh};`
-    }
-    // удалить
-    this.tester = () => {
-      var el = this.mainCont.appendChild(document.createElement("div"))
-      document.onclick = function(event){
-	       el.style.color = "red"
-	        el.innerText = `x: ${event.clientX-gameSize.left}: y: ${event.clientY}`
-	         el.style.background = "black"
+      var item = document.getElementById(itemId)
+      item.style.left = space.parentNode.offsetLeft + space.offsetLeft + "px"
+      item.style.top = space.parentNode.offsetTop + space.offsetTop + "px"
+      item.style.width = space.clientWidth + "px"
+      item.style.height = space.clientHeight + "px"
+      item.style.backgroundSize = `${space.clientWidth}px ${space.clientHeight}px`
+      if (counter === 3) {
+        setTimeout(function(){
+          removeItems()
+          this.scenarioGame("knight")
+        }.bind(this),1000)
       }
-      // удалить
     }
+    var removeItems = togle => {
+      var massItem = Array.from(document.querySelectorAll(".first"))
+      massItem.forEach(el => {
+        el.rem ? el.remove() : togle ? el.remove() : null
+      })
+    }
+    var counter = 0
+    // функция печатания текста
+    var printText = text => {
+        var oldText = document.querySelector(".text")
+        oldText ? oldText.remove() : null
+        var textCon = createTags("div", this.mainCont, "text")
+        var rec = function(n) {
+          setTimeout(function(){
+            if (n <= text.length-1) {
+              textCon.innerHTML += text.charAt(n)
+              rec(n+1)
+            }else {
+              setTimeout(function(){
+                textCon.remove()
+              },1500)
+            }
+          },100)
+        }
+        rec(0)
+    }
+    // метод перезаписи онклика для меню
+    var changeOnclick = (elem, newClick) => {
+      // newClick()     /*test*/
+      elem.onclick = newClick
+
+    }
+    // метод смерти злого персонажа
+    var evilDie = (pers, persImg, scen) => {
+      pers.style.backgroundImage = persImg
+      setTimeout(function(){
+        pers.remove()
+        this.scenarioGame(scen)
+      }.bind(this),2500)
+    }
+    // метод прекращения игры
+    var gameOver = () => {
+      removeItems(true)
+      var over = createTags("div", this.mainCont, "over")
+      over.style.opacity = 0
+      over.innerText = "GAME OVER"
+      var counter = 0
+      var time = setInterval(function(){
+        counter === 1 ? clearInterval(time) : over.style.opacity = counter += 0.05
+      }.bind(this),100)
+    }
+
   }
 }
 var game = new Game()
-// var test = game.mainCont.appendChild(document.createElement("rec-form"))
-game.scenarioGame("castle")
-// test.assignment (game.start)
-// test.start()
-game.start()
-// game.tester()
+game.resize()
+console.dir(game.mainCont)
+var test = game.mainCont.appendChild(document.createElement("rec-form"))
+test.assignment (game.start)
+test.start()

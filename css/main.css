@@ -12,6 +12,8 @@ body {
 }
 .mainGround {
   position: absolute;
+  background-image: url("../images/castle.png");
+  transition: all 0.8s;
   /* width: 1400px;
   height: 720px; */
   display: flex;
@@ -71,12 +73,19 @@ rec-form {
               0 0 25px #28b3cf,
               0 0 50px #28b3cf;
 }
-.first {
+.first, .evel {
   background-position: center;
   background-repeat: no-repeat;
   position: absolute;
   z-index: 2;
-  transition: all 0.8s;
+  transition: all 1s;
+}
+.evel {
+  width: 500px;
+  height: 600px;
+  background-image: url("../images/villain.png");
+  background-size: cover;
+  bottom: 0;
 }
 #bottle {
   background-image: url("../images/bottle.png");
@@ -121,4 +130,53 @@ rec-form {
 }
 #ib3 {
   top: 110px;
+}
+#evel_knight {
+  background-image: url("../images/evel_knight.png");
+  z-index: 2;
+}
+.text, .question {
+  background-image: url("../images/board.png");
+  width: 400px;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.text {
+  padding: 30px;
+  font-size: 24px;
+}
+.over {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  font-size: 100px;
+  color: #b51731;
+  text-shadow: 0 0 15px red, 0 0 25px red;
+  text-align: center;
+  line-height: 100vh
+}
+.fin {
+  text-decoration: none;
+  color: #9d5c4c;
+  font-size: 48px;
+}
+/* Стили для контейнера с вопросами и его содержимого */
+.question {
+  padding: 20px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.answBtn {
+
+}
+.answText {
+
+}
+pre {
+  width: 350px;
 }
