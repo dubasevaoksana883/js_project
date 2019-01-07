@@ -9,31 +9,64 @@ class Game {
     // функция создания тегов
     this.mainCont = createTags ("div")
     this.mainCont.className = "mainGround"
+    // функция респонсив
+    var gameSizes = {
+      w: 1400,
+      h: 720,
+    }
     this.resize = () => {
+      var ww = window.innerWidth
+      var wh = window.innerHeight
+      var it = parts[1].items
+      console.log(ww, wh, 0)
+      if(ww <= 1280 && wh <= 1024 && ww >= 1023 && wh >= 614){
+        gameSizes.w = 1050
+        gameSizes.h = 630
+        it[0].cords.x = 100
+        it[0].cords.y = 440
+        it[1].cords.x = 730
+        it[1].cords.y = 400
+        it[2].cords.x = 245
+        it[2].cords.y = 400
+        it[3].cords.x = 80
+        it[3].cords.y = 450
+        it[4].cords.x = 720
+        it[4].cords.y = 375
+        console.log(ww, wh, 1)
+      }
+      if( ww <= 1023 && wh <= 786 && ww >= 980 && wh >= 646){
+        gameSizes.w = 1000
+        gameSizes.h = 650
+        console.log(ww, wh, 2)
+      }
       this.mainCont.style =`
-      width: ${gameSize.w}px;
-      height: ${gameSize.h}px;
-      left: ${gameSize.indent}px;
       background-size: cover;
+      width: ${gameSizes.w}px;
+      height: ${gameSizes.h}px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       background-repeat: no-repeat;
       `
     }
+    var elixRes = false // Вспомогательная переменная для эликсира
+
     var parts = [
       {
         name: "castle",
         background: "images/castle.jpg",
-        text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
+        // text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
       },
       {
         name: "room",
         background: "images/room.jpg",
-        text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
+//        text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
         items: [
           {
             id: "bottle",
             cords: {
-              x: 220,
-              y: 630
+              x: 152,
+              y: 562
             },
             sizes: {
               h: 70,
@@ -45,8 +78,8 @@ class Game {
           {
             id: "bucket",
             cords: {
-              x: 960,
-              y: 590
+              x: 892,
+              y: 522
             },
             sizes: {
               h: 90,
@@ -58,8 +91,8 @@ class Game {
           {
             id: "elixir",
             cords: {
-              x: 379,
-              y: 572
+              x: 311,
+              y: 504
             },
             sizes: {
               h: 30,
@@ -68,10 +101,10 @@ class Game {
             className: "first",
             onclick: function (event) {
               this.moveItem( "elixir", "ib2")
-              namePart === "knight" || namePart === "safe" || "room-chest"? changeOnclick(event.target, function (event){
+              namePart === "knight" || namePart === "safe" || "room-chest" ? changeOnclick(event.target, function (event){
                 var x = document.querySelector(".question")
                 var t = document.querySelector(".text")
-                if (x && !t ){
+                if (x && !t && elixRes){
                   x.style.display = "flex"
                   event.target.remove()
                 }
@@ -83,8 +116,8 @@ class Game {
           {
             id: "key",
             cords: {
-              x: 200,
-              y: 650
+              x: 132,
+              y: 582
             },
             sizes: {
               h: 60,
@@ -93,8 +126,8 @@ class Game {
             className: "first",
             onclick: function (event) {
               this.moveItem( "key", "ib3")
-              namePart === "room-chest"? changeOnclick(event.target, function(event){
-                if ( document.querySelector(".text"))return
+             changeOnclick(event.target, function(event){
+                if ( document.querySelector(".text") || namePart !== "room-chest")return //убираем двойной клик
                 console.log (event)
                 event.target.remove()
                 var evel = createTags("div", this.mainCont, "evel")
@@ -113,15 +146,15 @@ class Game {
                     }
                   }
                 }.bind(this), 100)
-              }.bind(this)) :null
+              }.bind(this))
             }.bind (this),
             rem: false,
           },
           {
             id: "sword",
             cords: {
-              x: 962,
-              y: 564
+              x: 894,
+              y: 496
             },
             sizes: {
               h: 90,
@@ -130,8 +163,8 @@ class Game {
             className: "first",
             onclick: function (event) {
               this.moveItem( "sword", "ib1")
-              namePart === "knight" ? changeOnclick(event.target, function (event){
-                if ( document.querySelector(".text"))return
+              changeOnclick(event.target, function (event){
+                if ( document.querySelector(".text") || namePart !== "knight")return
                 var oldQue = document.querySelector(".question")
                 if (oldQue)return
                 var questContiner = createTags("div", this.mainCont, "question")
@@ -145,14 +178,14 @@ class Game {
                      x.remove()
                   }else {
                     var elexirValue = document.getElementById("elixir")
+                    elixRes = true
                     elexirValue ? printText("Ты не смог ответить верно, поэтому тебя ранили, что бы залечить раны примени эликсир") : null
                     questContiner.style.display = "none"
                     var elexirValue = document.getElementById("elixir")
                     !elexirValue ? gameOver() : console.log("hello")
-
                   }
                 }
-              }.bind (this)) : null
+              }.bind (this))
             }.bind (this),
             rem: false,
           }
@@ -166,8 +199,8 @@ class Game {
           {
             id: "evel_knight",
             cords: {
-              x: 950,
-              y: 430,
+              x: 882,
+              y: 362,
             },
             sizes: {
               h: 220,
@@ -245,12 +278,6 @@ class Game {
         }.bind(this), 100)
       }
     }
-    // размеры игрового окна
-    var gameSize = {
-      w: 1400,
-      h: 720,
-      indent: (window.innerWidth - 1400) / 2
-    }
     this.start = () => {
       this.scenarioGame("castle")
       var timer = setInterval(function(){
@@ -278,8 +305,8 @@ class Game {
           height: ${elem.sizes.h}px;
           background-size: ${elem.sizes.w}px ${elem.sizes.h}px;
         `
-        icon.style.left =  elem.cords.x - gameSize.indent + "px"
-        icon.style.top = elem.cords.y - gameSize.indent+ "px"
+        icon.style.left =  elem.cords.x  + "px"
+        icon.style.top = elem.cords.y + "px"
         elem.onclick ? icon.onclick = elem.onclick : null
         icon.rem = elem.rem
       })
@@ -287,6 +314,9 @@ class Game {
     var menuBar = () => {
       var bar = createTags("div", this.mainCont)
       bar.className = "bar"
+      var bsw = 50
+      bar.style.width = bsw + "px"
+      bar.style.left = gameSizes.w - bsw + "px"
       var i = 1
       while (i <= 3) {
         var per = createTags("div", bar)
@@ -366,7 +396,6 @@ class Game {
 }
 var game = new Game()
 game.resize()
-console.dir(game.mainCont)
 var test = game.mainCont.appendChild(document.createElement("rec-form"))
 test.assignment (game.start)
 test.start()

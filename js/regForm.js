@@ -21,6 +21,13 @@ class RegistrationForm extends HTMLElement{
                 tagName: "div",
                 attrs: {
                     innerText: "Вход",
+                    style: `
+                      margin: 50px;
+                      font-size: 32px;
+                      text-align: center;
+                      padding-bottom: 30px;
+                      cursor: pointer;
+                    `,
                     onclick: event => {
                            this.startEnter()
                     }
@@ -30,6 +37,12 @@ class RegistrationForm extends HTMLElement{
                 tagName: "div",
                 attrs: {
                     innerText: "Регистрация",
+                    style: `
+                      margin: 50px;
+                      font-size: 32px;
+                      text-align: center;
+                      cursor: pointer;
+                    `,
                     onclick: event => {
                             this.startReg()
                     }
@@ -113,6 +126,11 @@ class RegistrationForm extends HTMLElement{
                 tagName: "div",
                 attrs: {
                     innerText: "Продолжить",
+                    style:`
+                      font-size: 18px;
+                      padding-top: 10px;
+                      cursor: pointer;
+                    `,
                     onclick: event => {
                             var inp = Array.from(mainCont.children)
                             .filter (
