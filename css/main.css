@@ -4,11 +4,10 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
           font-family: 'Lobster', cursive;
+          user-select: none;
 }
 body {
   background: black;
-  /* display: flex;
-  justify-content: center; */
 }
 .mainGround {
   position: absolute;
@@ -29,6 +28,7 @@ rec-form {
   box-shadow: 0 0 10px #e8dfd5, 0 0 15px #f6c6ad;
   background: #2e2723cc;
   color: #9d5c4c;
+  text-shadow: 0 0 7px #350b01;
 }
 .startBtn {
   display: block;
@@ -105,10 +105,8 @@ rec-form {
 .bar {
   position: absolute;
   background: #ffffff70;
-  width: 50px;
   height: 160px;
   top: 20px;
-  left: 1330px;
   border-radius: 15px;
 }
 .itemBar {
