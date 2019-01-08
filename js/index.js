@@ -55,12 +55,12 @@ class Game {
       {
         name: "castle",
         background: "images/castle.jpg",
-        // text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
+        text: "Добро пожаловать в стариный замок! В подземелье спрятана книга знаний, которая откроет тебе новый, удивительный мир. Но на пути тебя ждут испытания!"
       },
       {
         name: "room",
         background: "images/room.jpg",
-//        text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
+       text: `В поисках книги тебе понадобится мечь, эликсир, ключ. Найди их!!!`,
         items: [
           {
             id: "bottle",
@@ -271,7 +271,6 @@ class Game {
             qu.createAnswer (  qu.content [qu.curentQuestion], questContiner)
             var answBtn = document.querySelector(".answBtn")
             answBtn.onclick = function(event){
-              console.log("down", this)
               curentPart.res()
             }
           }
