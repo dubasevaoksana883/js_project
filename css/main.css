@@ -4,11 +4,14 @@
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
           font-family: 'Lobster', cursive;
+          user-select: none;
+}
+body {
+  background: black;
 }
 .mainGround {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  background-image: url("../images/castle.jpg");
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,6 +28,7 @@ rec-form {
   box-shadow: 0 0 10px #e8dfd5, 0 0 15px #f6c6ad;
   background: #2e2723cc;
   color: #9d5c4c;
+  text-shadow: 0 0 7px #350b01;
 }
 .startBtn {
   display: block;
@@ -65,5 +69,117 @@ rec-form {
               inset 0 0 125px #2395c2,
               0 0 25px #28b3cf,
               0 0 50px #28b3cf;
-
+}
+.first, .evel {
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  z-index: 2;
+  transition: all 1s;
+}
+.evel {
+  position: absolute;
+  width: 320px;
+  height: 400px;
+  background-image: url("../images/villain.png");
+  background-size: cover;
+  bottom: 0;
+  left: -60px;
+}
+#bottle {
+  background-image: url("../images/bottle.png");
+}
+#bucket {
+  background-image: url("../images/bucket.png");
+}
+#elixir {
+  background-image: url("../images/elixir.png");
+}
+#key {
+  background-image: url("../images/key.png");
+  z-index: 1;
+}
+#sword {
+  background-image: url("../images/sword.png");
+  transform: rotate(300deg);
+  z-index: 1;
+}
+.bar {
+  position: absolute;
+  background: #ffffff70;
+  height: 160px;
+  top: 20px;
+  border-radius: 15px;
+}
+.itemBar {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #00000070;
+  border-radius: 5px;
+  left: 5px;
+}
+#ib1 {
+  top: 10px;
+}
+#ib2 {
+  top: 60px;
+}
+#ib3 {
+  top: 110px;
+}
+#evel_knight {
+  background-image: url("../images/evel_knight.png");
+  z-index: 2;
+}
+.text, .question {
+  background-image: url("../images/board.jpg");
+  width: 400px;
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.text {
+  padding: 30px;
+  font-size: 24px;
+}
+.over {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  font-size: 100px;
+  color: #b51731;
+  text-shadow: 0 0 15px red, 0 0 25px red;
+  text-align: center;
+  line-height: 100vh
+}
+.fin {
+  text-decoration: none;
+  color: #9d5c4c;
+  font-size: 48px;
+}
+/* Стили для контейнера с вопросами и его содержимого */
+.question {
+  padding: 20px;
+  font-size: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.answBtn {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  cursor: pointer;
+}
+.answText {
+  margin: 0;
+  padding-top: 10px;
+  padding-left: 5px;
+}
+pre {
+  width: 350px;
+  margin: 0;
+  padding-left: 5px;
 }
